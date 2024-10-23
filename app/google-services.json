@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "733509077196",
+    "project_id": "chatapplication-5a3cf",
+    "storage_bucket": "chatapplication-5a3cf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:733509077196:android:544bed6e9d165cfabc1a69",
+        "android_client_info": {
+          "package_name": "com.mjolnir.chatapplication"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAhwqA9I8B8pRMjAILScsLeCU2ZqeOvIN0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
