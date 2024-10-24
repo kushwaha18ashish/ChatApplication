@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 
 class SignUp : AppCompatActivity() {
 
@@ -21,11 +23,15 @@ class SignUp : AppCompatActivity() {
     private lateinit var btnSignUp: Button
     private lateinit var tvLogin: TextView
     private lateinit var mAuth: FirebaseAuth
+    private lateinit var mDbRef:DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_sign_up)
+
+        supportActionBar?.hide()
+
         mAuth=FirebaseAuth.getInstance()
         etName=findViewById(R.id.etUsername)
         etEmail=findViewById(R.id.etEmail)
@@ -34,6 +40,7 @@ class SignUp : AppCompatActivity() {
         tvLogin=findViewById(R.id.tvLogin)
 
         btnSignUp.setOnClickListener {
+            val name=etName.text.toString()
             val email=etEmail.text.toString()
             val password=etPassword.text.toString()
 
@@ -47,7 +54,7 @@ class SignUp : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            signUp(email,password)
+            signUp(name,email,password)
         }
 
         tvLogin.setOnClickListener {
@@ -57,16 +64,22 @@ class SignUp : AppCompatActivity() {
         }
     }
 
-    private fun signUp(email: String, password: String) {
+    private fun signUp(name:String,email: String, password: String) {
         mAuth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
+                    addUserToDatabase(name,email,mAuth.currentUser?.uid!!)
                     val intent=Intent(this,LogIn::class.java)
                     startActivity(intent)
                 } else {
                     Toast.makeText(this,"Something went wrong!",Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    private fun addUserToDatabase(name:String,email:String,uid:String){
+        mDbRef=FirebaseDatabase.getInstance().getReference()
+        mDbRef.child("user").child(uid).setValue(User(name,email,uid))
     }
 
 

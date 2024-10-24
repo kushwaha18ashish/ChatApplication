@@ -26,6 +26,8 @@ class LogIn : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_log_in)
 
+        supportActionBar?.hide()
+
         mAuth=FirebaseAuth.getInstance()
 
         etEmail=findViewById(R.id.etemail)
